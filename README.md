@@ -30,3 +30,18 @@ The system processes satellite images and predicts flood regions using semantic 
 
 ### Ensemble Technique
 Predictions from both models are combined using weighted averaging:
+Final Prediction = 0.8 × Model1 + 0.2 × Model2
+
+This improves generalization and boosts IoU performance.
+
+## 📊 Results
+- Significant improvement over single-model baseline
+- Ensemble strategy improves robustness and accuracy
+
+## 📁 Structure
+- Training pipelines for both models
+- Inference and submission generation
+- Preprocessing utilities
+
+## 📜 License
+This project follows the ANRF Open License.
