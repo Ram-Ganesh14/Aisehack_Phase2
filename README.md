@@ -1,47 +1,86 @@
 # AI-Powered Flood Segmentation using Multi-Modal Satellite Data
 
-This project implements a deep learning pipeline for flood segmentation using multi-modal satellite imagery combining SAR and optical data.
+A deep learning pipeline for accurate flood segmentation using multi-modal satellite imagery, combining optical and SAR data with advanced architectures and ensemble strategies.
 
-## 🔍 Overview
-The system processes satellite images and predicts flood regions using semantic segmentation models. The approach integrates feature engineering and ensemble learning to improve performance on limited datasets.
+---
 
-## 🧠 Methodology
+## 📂 Pipeline Overview
 
-### Data Processing
-- Multi-modal input: SAR (HH, HV) + Optical bands
-- Feature engineering:
-  - NDWI (Normalized Difference Water Index)
-  - MNDWI
-  - NDVI
-  - SAR difference (HH - HV)
-- Percentile-based normalization (2–98%) to handle noise and outliers
+The project follows a structured end-to-end pipeline:
 
-### Models Used
-- **UNet (ResNet34 encoder)** — stable baseline model
-- **UNet++ (EfficientNet-B5 encoder)** — captures complex spatial features
+### 1. Data Loading
+- Raster **TIFF** satellite imagery  
+- Multi-band inputs (optical + SAR)
 
-### Training Strategy
-- Loss Function:
-  - Weighted CrossEntropy Loss (for class imbalance)
-  - Dice Loss (for segmentation accuracy)
-- Optimizer: AdamW
-- Batch size: 4
-- Multi-epoch training
+### 2. Feature Engineering
+- Computation of spectral indices:
+  - **NDWI** (Normalized Difference Water Index)
+  - **NDVI** (Normalized Difference Vegetation Index)
+  - Additional custom indices  
+- Channel stacking for enriched input representation
 
-### Ensemble Technique
-Predictions from both models are combined using weighted averaging:
-Final Prediction = 0.8 × Model1 + 0.2 × Model2
+### 3. Model Training
+- **UNet (ResNet34 backbone)**
+- **UNet++ (EfficientNet-B5 backbone)**
+- Stratified training with imbalance handling
 
-This improves generalization and boosts IoU performance.
+### 4. Ensemble & Inference
+- Model ensembling for improved generalization  
+- **Test Time Augmentation (TTA)** for robustness  
 
-## 📊 Results
-- Significant improvement over single-model baseline
-- Ensemble strategy improves robustness and accuracy
+### 5. Post-processing
+- Mask refinement  
+- **RLE Encoding** for submission  
 
-## 📁 Structure
-- Training pipelines for both models
-- Inference and submission generation
-- Preprocessing utilities
+---
 
-## 📜 License
-This project follows the ANRF Open License.
+## 🚀 Key Innovations
+
+- 🔗 **Multi-modal fusion** (Optical + SAR data)  
+- 🌈 **Custom spectral indices** for better water detection  
+- ⚖️ **Weighted loss functions** to handle class imbalance  
+- 🧠 **Model ensembling** for higher accuracy  
+- 🔁 **Test Time Augmentation (TTA)** for stable predictions  
+
+---
+
+## 📊 Models
+
+| Model File | Architecture | Backbone |
+|-----------|-------------|----------|
+| `model2.pth` | UNet | ResNet34 |
+| `best.pth` | UNet++ | EfficientNet-B5 |
+
+---
+
+## 🛠️ Tech Stack
+
+- Python  
+- PyTorch  
+- segmentation-models-pytorch  
+- Rasterio  
+- NumPy  
+- Pandas  
+- OpenCV  
+
+---
+
+## 📈 Workflow Summary
+Satellite Data → Feature Engineering → Model Training
+→ Ensemble + TTA → Post-processing → Submission (RLE)
+
+
+---
+
+## ⚖️ License
+
+This project follows the **ANRF Open License**.  
+Please refer to the `LICENSE` file for full details.
+
+---
+
+## 📌 Notes
+
+- Designed for high-performance flood detection tasks  
+- Optimized for competitions like Kaggle / real-world disaster response  
+- Easily extendable to other segmentation problems  
